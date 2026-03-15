@@ -129,20 +129,23 @@ def flatten_content(content: Any) -> str:
 
 
 def transcript_from_messages(messages: list[dict[str, Any]]) -> str:
-    lines = [
-        "Respond to the final user turn as the assistant.",
-        "Use the conversation transcript below as the full context.",
-        "",
-        "Conversation:",
-    ]
+    lines: list[str] = []
     for message in messages:
-        role = str(message.get("role", "user")).upper()
+        role = str(message.get("role", "user")).strip().lower() or "user"
         content = flatten_content(message.get("content", ""))
         if not content:
             continue
-        lines.append(f"[{role}]")
-        lines.append(content)
-        lines.append("")
+        if role == "system":
+            label = "System"
+        elif role == "assistant":
+            label = "Assistant"
+        else:
+            label = "User"
+        lines.append(f"{label}: {content}")
+    if not lines:
+        return "Assistant:"
+    if not lines[-1].startswith("Assistant:"):
+        lines.append("Assistant:")
     return "\n".join(lines).strip()
 
 
