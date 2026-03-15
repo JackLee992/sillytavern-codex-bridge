@@ -24,6 +24,16 @@ If the user only wants configuration help, read `references/sillytavern-setup.md
 
 If the user wants bridge behavior or endpoint details, read `references/bridge-behavior.md`.
 
+## Current Scope
+
+This skill is good for:
+
+- installing `SillyTavern`
+- wiring `SillyTavern` to a local `Codex` bridge
+- using `Codex` as a task-oriented or assistant-style backend behind the SillyTavern UI
+
+This skill is not a reliable way to turn `Codex` into a full roleplay model. `Codex` can answer through the SillyTavern UI, but it still behaves like a task/agent product rather than a dedicated immersive RP chat model.
+
 ## Standard Workflow
 
 ### 1. Install or update SillyTavern
@@ -91,6 +101,7 @@ Keep SillyTavern's own UI and chat flow. Only the backend target changes.
 - If the bridge must be debugged, check `/health`, `/v1/models`, then `/v1/chat/completions`.
 - On Windows, clear inherited proxy variables before invoking `codex exec` if the bridge runs in a restricted shell environment.
 - On Windows, prefer passing the prompt as a command argument to `codex exec` instead of stdin when non-ASCII input may be present.
+- If the user wants long-form roleplay, character immersion, or consistent scene memory, state the limitation clearly: the bridge works technically, but `Codex` is still not equivalent to a dedicated chat/RP model.
 
 ## Files
 
