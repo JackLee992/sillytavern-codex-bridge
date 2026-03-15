@@ -1,0 +1,4 @@
+interface:
+  display_name: "SillyTavern Codex Bridge"
+  short_description: "Install SillyTavern and bridge it to Codex"
+  default_prompt: "Use $sillytavern-codex-bridge to install SillyTavern and run a local Codex-compatible bridge for it."
