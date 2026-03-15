@@ -52,6 +52,7 @@ The install scripts:
 - preconfigure `SillyTavern` to use `chat_completion_source = custom`
 - set `custom_url` to the local bridge and `custom_model` to `codex-cli`
 - write `api_key_custom` into `SillyTavern`'s secret store file
+- write chat-completion config into `settings.json -> oai_settings`, not only loose top-level keys
 - enable `power_user.auto_connect` so the UI connects automatically after reload
 
 ### 2. Start the bridge
@@ -88,6 +89,8 @@ Keep SillyTavern's own UI and chat flow. Only the backend target changes.
 - Treat the bridge key like a local secret. Rotate it by editing the env file or re-running the install script with a new key.
 - If the user asks for custom host, port, model, or working directory, update the env file instead of patching the Python bridge unless behavior must change.
 - If the bridge must be debugged, check `/health`, `/v1/models`, then `/v1/chat/completions`.
+- On Windows, clear inherited proxy variables before invoking `codex exec` if the bridge runs in a restricted shell environment.
+- On Windows, prefer passing the prompt as a command argument to `codex exec` instead of stdin when non-ASCII input may be present.
 
 ## Files
 

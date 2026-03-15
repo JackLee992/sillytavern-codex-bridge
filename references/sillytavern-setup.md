@@ -37,4 +37,5 @@ If the env file changes the port or model, use those values instead.
 - Connection refused: wrong port or bridge process not started.
 - Long wait then failure: local `codex` command cannot reach the OpenAI backend from the user's machine.
 - `Not connected to API!` with working backend endpoints: refresh the page and verify `power_user.auto_connect` is enabled. The install script now enables it by default.
+- Theme switches or manual settings saves can break the bridge if `settings.json -> oai_settings.chat_completion_source`, `custom_url`, or `custom_model` are overwritten. Restore those fields instead of only editing top-level duplicates.
 - Replies look too tool-oriented: change the messages or system prompt on the SillyTavern side; the bridge does not rewrite persona logic beyond transcript formatting.

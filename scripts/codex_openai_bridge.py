@@ -165,18 +165,32 @@ def run_codex(prompt: str, config: BridgeConfig) -> tuple[str, str]:
         str(config.codex_cwd),
         "-o",
         str(output_path),
-        "-",
     ]
     if config.codex_model:
         command.extend(["--model", config.codex_model])
+    command.append(prompt)
+    child_env = os.environ.copy()
+    # Clear inherited proxy/sandbox overrides so a local bridge can reach Codex normally.
+    for key in (
+        "HTTP_PROXY",
+        "HTTPS_PROXY",
+        "ALL_PROXY",
+        "http_proxy",
+        "https_proxy",
+        "all_proxy",
+        "GIT_HTTP_PROXY",
+        "GIT_HTTPS_PROXY",
+        "CODEX_SANDBOX_NETWORK_DISABLED",
+    ):
+        child_env.pop(key, None)
     try:
         result = subprocess.run(
             command,
-            input=prompt,
             text=True,
             capture_output=True,
             timeout=config.request_timeout,
             check=False,
+            env=child_env,
         )
         reply = output_path.read_text(encoding="utf-8") if output_path.exists() else ""
         stderr = (result.stderr or "").strip()

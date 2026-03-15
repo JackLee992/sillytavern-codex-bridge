@@ -38,3 +38,5 @@ Streaming is synthetic: the bridge gets the full Codex response first, then emit
 - This bridge is optimized for chat completion calls, not tool calling.
 - It does not preserve OpenAI token accounting; usage values are rough estimates.
 - It depends on the local `codex` CLI already being logged in and working on the machine that runs the bridge.
+- On Windows, inherited `HTTP_PROXY` or `HTTPS_PROXY` values from a sandboxed shell can break `codex exec`. Clear them before launching the child process.
+- On Windows, feeding multilingual prompts through stdin may fail due to encoding issues in `codex.cmd`; passing the prompt as a direct command argument is more reliable.
